@@ -56,6 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Default Frost Effect
         document.body.classList.add('frost-border-active');
         elements.frostToggle.checked = true;
+
+        // Check for default background image
+        if (elements.backgroundImage.getAttribute('src')) {
+            const img = new Image();
+            img.onload = () => {
+                elements.backgroundImage.classList.add('visible');
+                document.body.classList.add('background-hidden');
+                state.bgImageLoaded = true;
+            };
+            img.onerror = () => {
+                console.log('No default background image found or failed to load.');
+            };
+            img.src = elements.backgroundImage.src;
+        }
     }
 
     function resizeCanvases() {
