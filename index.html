@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>冬日窗霜 | Winter Glass</title>
+    <meta name="description" content="在冬日的水汽窗户上涂画，留下你的痕迹">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Layer -->
+    <div id="background-layer">
+        <img id="background-image" src="" alt="背景图片">
+        <div id="default-scene">
+            <div class="snowflake">❄</div>
+            <div class="snowflake">❅</div>
+            <div class="snowflake">❆</div>
+            <div class="snowflake">❄</div>
+            <div class="snowflake">❅</div>
+            <div class="snowflake">❆</div>
+            <div class="snowflake">❄</div>
+            <div class="snowflake">❅</div>
+        </div>
+    </div>
+
+    <!-- Glass Layer with Frost Effect -->
+    <canvas id="frost-canvas"></canvas>
+    
+    <!-- Water Droplets Layer -->
+    <canvas id="droplets-canvas"></canvas>
+
+    <!-- Control Panel -->
+    <div id="control-panel" class="glass-panel">
+        <div class="panel-header">
+            <h1>冬日窗霜</h1>
+            <button id="toggle-panel" class="icon-btn" title="收起面板">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="panel-content">
+            <!-- Fog Density Control -->
+            <div class="control-group">
+                <label>
+                    <span class="label-text">雾气浓度</span>
+                    <span class="label-value" id="fog-value">70%</span>
+                </label>
+                <input type="range" id="fog-density" min="30" max="100" value="70">
+            </div>
+
+            <!-- Brush Size Control -->
+            <div class="control-group">
+                <label>
+                    <span class="label-text">画笔大小</span>
+                    <span class="label-value" id="brush-value">40px</span>
+                </label>
+                <input type="range" id="brush-size" min="10" max="100" value="40">
+            </div>
+
+            <!-- Toggle Options -->
+            <div class="control-group toggles">
+                <label class="toggle-label">
+                    <input type="checkbox" id="enable-droplets" checked>
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-text">水珠滴落</span>
+                </label>
+                <label class="toggle-label">
+                    <input type="checkbox" id="enable-frost">
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-text">边缘结霜</span>
+                </label>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="control-group actions">
+                <label class="action-btn upload-btn">
+                    <input type="file" id="upload-image" accept="image/*" hidden>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span>上传背景</span>
+                </label>
+                <button id="reset-canvas" class="action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span>重置窗户</span>
+                </button>
+                <button id="download-image" class="action-btn primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>保存图片</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hint Overlay -->
+    <div id="hint-overlay">
+        <div class="hint-content">
+            <div class="hint-icon">👆</div>
+            <p>用手指或鼠标在窗户上涂画</p>
+            <p class="hint-sub">擦去雾气，留下你的痕迹</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

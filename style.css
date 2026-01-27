@@ -1,0 +1,663 @@
+/* ============================================
+   Winter Glass Condensation - Styles
+   A serene winter aesthetic with frost and fog
+   ============================================ */
+
+:root {
+    /* Color Palette - Winter Blues */
+    --frost-white: #f0f5fa;
+    --ice-blue: #c7dced;
+    --winter-sky: #8fb4d2;
+    --deep-frost: #5a8ab0;
+    --night-blue: #2c4a6b;
+    --warm-glow: #ffecd2;
+    --warm-accent: #fcb69f;
+
+    /* Glass Effects */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: rgba(0, 20, 40, 0.3);
+
+    /* Fog Colors */
+    --fog-light: rgba(200, 215, 230, 0.85);
+    --fog-medium: rgba(180, 200, 220, 0.9);
+    --fog-dense: rgba(160, 185, 210, 0.95);
+
+    /* Typography */
+    --font-display: 'Ma Shan Zheng', cursive;
+    --font-body: 'Cormorant Garamond', serif;
+
+    /* Spacing */
+    --panel-padding: 1.5rem;
+    --control-gap: 1rem;
+
+    /* Transitions */
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, var(--night-blue) 0%, #1a2f4a 50%, #0f1f30 100%);
+    color: var(--frost-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ============================================
+   Background Layer
+   ============================================ */
+#background-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+}
+
+#background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#background-image.visible {
+    opacity: 1;
+}
+
+/* Default Winter Scene */
+#default-scene {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(100, 150, 200, 0.15) 0%, transparent 40%),
+        linear-gradient(180deg,
+            #1a2f4a 0%,
+            #2c4a6b 30%,
+            #4a6d8c 60%,
+            #6a8fac 80%,
+            #8fb4d2 100%);
+    transition: opacity 0.5s ease;
+}
+
+#default-scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 230, 180, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(255, 200, 150, 0.05) 0%, transparent 25%);
+    pointer-events: none;
+}
+
+.background-hidden #default-scene {
+    opacity: 0;
+}
+
+/* Snowflakes Animation */
+.snowflake {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
+    animation: snowfall linear infinite;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.snowflake:nth-child(1) {
+    left: 10%;
+    animation-duration: 15s;
+    animation-delay: 0s;
+    font-size: 1.2rem;
+}
+
+.snowflake:nth-child(2) {
+    left: 25%;
+    animation-duration: 12s;
+    animation-delay: 2s;
+    font-size: 1.8rem;
+}
+
+.snowflake:nth-child(3) {
+    left: 40%;
+    animation-duration: 18s;
+    animation-delay: 4s;
+    font-size: 1rem;
+}
+
+.snowflake:nth-child(4) {
+    left: 55%;
+    animation-duration: 14s;
+    animation-delay: 1s;
+    font-size: 1.5rem;
+}
+
+.snowflake:nth-child(5) {
+    left: 70%;
+    animation-duration: 16s;
+    animation-delay: 3s;
+    font-size: 1.3rem;
+}
+
+.snowflake:nth-child(6) {
+    left: 85%;
+    animation-duration: 13s;
+    animation-delay: 5s;
+    font-size: 1.6rem;
+}
+
+.snowflake:nth-child(7) {
+    left: 15%;
+    animation-duration: 17s;
+    animation-delay: 6s;
+    font-size: 1.1rem;
+}
+
+.snowflake:nth-child(8) {
+    left: 60%;
+    animation-duration: 11s;
+    animation-delay: 7s;
+    font-size: 1.4rem;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   Canvas Layers
+   ============================================ */
+#frost-canvas,
+#droplets-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#frost-canvas {
+    z-index: 10;
+    cursor: crosshair;
+}
+
+#droplets-canvas {
+    z-index: 11;
+    pointer-events: none;
+}
+
+/* ============================================
+   Control Panel - Glassmorphism
+   ============================================ */
+#control-panel {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 280px;
+    z-index: 100;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    max-height: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Desktop Collapse: Shrink height */
+#control-panel.collapsed {
+    max-height: 72px;
+    /* Height of the header */
+}
+
+#control-panel.collapsed #toggle-panel svg {
+    transform: rotate(180deg);
+}
+
+.glass-panel {
+    background: rgba(10, 25, 40, 0.75);
+    /* Darker, high contrast background */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    height: 72px;
+    flex-shrink: 0;
+    cursor: default;
+}
+
+.panel-header h1 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--frost-white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--frost-white);
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.icon-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-smooth);
+}
+
+.panel-content {
+    padding: var(--panel-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--control-gap);
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+#control-panel.collapsed .panel-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ============================================
+   Control Groups
+   ============================================ */
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.label-value {
+    font-size: 0.85rem;
+    color: var(--ice-blue);
+    font-weight: 300;
+    min-width: 45px;
+    text-align: right;
+}
+
+/* Range Slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    /* Darker track for contrast */
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--frost-white) 0%, var(--ice-blue) 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 0 3px rgba(255, 255, 255, 0.1);
+    transition: transform var(--transition-bounce);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--frost-white) 0%, var(--ice-blue) 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Toggle Switches */
+.toggles {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    flex: 1;
+    min-width: 110px;
+}
+
+.toggle-label input {
+    display: none;
+}
+
+.toggle-switch {
+    width: 40px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 11px;
+    position: relative;
+    transition: background var(--transition-smooth);
+    flex-shrink: 0;
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--frost-white);
+    border-radius: 50%;
+    transition: transform var(--transition-bounce);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-label input:checked+.toggle-switch {
+    background: linear-gradient(135deg, var(--winter-sky) 0%, var(--deep-frost) 100%);
+}
+
+.toggle-label input:checked+.toggle-switch::after {
+    transform: translateX(18px);
+}
+
+.toggle-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Action Buttons */
+.actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: var(--frost-white);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    flex: 1;
+    min-width: 0;
+}
+
+.action-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.action-btn span {
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn.primary {
+    background: linear-gradient(135deg, var(--deep-frost) 0%, var(--night-blue) 100%);
+    border-color: var(--winter-sky);
+}
+
+.action-btn.primary:hover {
+    background: linear-gradient(135deg, var(--winter-sky) 0%, var(--deep-frost) 100%);
+}
+
+.upload-btn {
+    cursor: pointer;
+}
+
+/* ============================================
+   Hint Overlay
+   ============================================ */
+#hint-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 20, 40, 0.4);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+#hint-overlay.hidden {
+    opacity: 0;
+}
+
+.hint-content {
+    text-align: center;
+    animation: floatHint 3s ease-in-out infinite;
+}
+
+.hint-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.hint-content p {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--frost-white);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem;
+}
+
+.hint-sub {
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    opacity: 0.7;
+}
+
+@keyframes floatHint {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    #control-panel {
+        top: auto;
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        padding-bottom: 0;
+
+        /* Reset Desktop logic */
+        max-height: none;
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transform: translateY(0);
+    }
+
+    #control-panel.collapsed {
+        max-height: none;
+        /* Ensure no max-height limit on mobile */
+        /* Slide down, leaving header visible at bottom */
+        transform: translateY(calc(100% - 72px));
+    }
+
+    #control-panel.collapsed #toggle-panel svg {
+        /* On mobile, if collapsed (down), arrow should point UP to indicate 'pull up' aka expand? */
+        /* Currently default is down chevron. collapsed rotates 180 (UP). This seems correct. */
+        transform: rotate(180deg);
+    }
+
+    .panel-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .actions {
+        flex-wrap: nowrap;
+    }
+
+    .action-btn span {
+        display: none;
+    }
+
+    .action-btn {
+        padding: 0.7rem;
+        min-width: 44px;
+    }
+
+    .action-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .toggles {
+        flex-direction: column;
+    }
+
+    .toggle-label {
+        min-width: 100%;
+    }
+}
+
+/* ============================================
+   Frost Border Effect (Optional)
+   ============================================ */
+.frost-border-active #frost-canvas {
+    box-shadow: inset 0 0 100px 50px rgba(200, 220, 240, 0.3);
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
