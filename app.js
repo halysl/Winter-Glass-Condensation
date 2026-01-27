@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         isDrawing: false,
         brushSize: 40,
-        fogDensity: 0.7,
-        dropletsEnabled: true,
+        fogDensity: 1.0, // Default 100%
+        dropletsEnabled: false, // Default Off
         bgImageLoaded: false,
         lastX: 0,
         lastY: 0
@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initial control values
         updateUIFromState();
+
+        // Default Frost Effect
+        document.body.classList.add('frost-border-active');
+        elements.frostToggle.checked = true;
     }
 
     function resizeCanvases() {
@@ -115,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fCtx.globalCompositeOperation = 'source-over';
         fCtx.fillStyle = fogPattern;
-        // Since it's a pattern, we need to fill properly. 
-        // If we just fill over, it might darken. 
+        // Since it's a pattern, we need to fill properly.
+        // If we just fill over, it might darken.
         // Clear first if resetting density.
         fCtx.clearRect(0, 0, frostCanvas.width, frostCanvas.height);
         fCtx.fillRect(0, 0, frostCanvas.width, frostCanvas.height);
@@ -309,10 +313,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 startDraw(e);
             }
         }, { passive: false });
+
         window.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            moveDraw(e);
+            // ONLY prevent default if we are drawing on the canvas
+            // This fixes the issue where sliders in the control panel cannot be dragged on touch devices
+            if (e.target === frostCanvas) {
+                e.preventDefault();
+                moveDraw(e);
+            }
         }, { passive: false });
+
         window.addEventListener('touchend', endDraw);
 
         // UI Panel Toggles
