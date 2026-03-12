@@ -2,7 +2,7 @@
 
 一个模拟在结霜的窗户上涂画的 Web 应用。在这个静谧的冬日场景中，你可以用指尖擦去雾气，看着水珠缓缓滑落，感受窗外的朦胧景色。
 
-![Project Preview](https://via.placeholder.com/800x450?text=Winter+Glass+Preview)
+![Project Preview](./bg_test.png)
 
 ## ✨主要功能
 
